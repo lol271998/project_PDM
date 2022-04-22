@@ -1,37 +1,39 @@
 package org.app;// For convenience, always static import your generated tables and jOOQ functions to decrease verbosity:
-import java.sql.*;
-import org.jooq.*;
+
+import org.jooq.DSLContext;
 import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
-
-import static org.jooq.sources.tables.Users.USERS;
-
+import org.jooq.sources.tables.Movie;
+import org.jooq.sources.tables.Users;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.util.Arrays;
+import java.util.List;
 
 public  class Main {
     public static void main(String[] args) {
         String user = "fcd";
         String pass = "up201810097";
-        String url = "jdbc:postgresql://localhost:5432/postgres";
+        String url = "jdbc:postgresql://localhost:5432/twitchflixdb";
 
-        try {
-            Connection con = DriverManager.getConnection(url,user,pass);
-            DSLContext dsl = DSL.using(con, SQLDialect.POSTGRES);
+        System.out.println(user);
 
-            Result<Record> result;
-            result = dsl.select().from(USERS).fetch();
+        try (Connection connection = DriverManager.getConnection(url, user, pass)) {
+            System.out.println("Connected");
+            DSLContext create = DSL.using(connection, SQLDialect.POSTGRES);
+            Result<Record> result = create.select().from(Movie.MOVIE).fetch();
 
             for (Record r : result) {
-                Integer id = r.getValue(USERS.USER_ID);
-                String name = r.getValue(USERS.USERNAME);
+                Integer id = r.getValue(Movie.MOVIE.MOVIE_ID);
+                String username = r.getValue(Movie.MOVIE.TITLE);
 
-                System.out.println("id: " + id + " Name: " + name );
+                System.out.println("ID: " + id + " title: " + username );
             }
-
-
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }

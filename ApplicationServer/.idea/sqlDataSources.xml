@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DdlMappings">
+    <mapping uuid="aaba4345-cf1f-48db-8a7c-d3c221e4c211" name="TwitchFlixDB Mapping">
+      <data-sources db="d0e4263c-434d-406c-978e-4f811a0346e9" ddl="2107a0ac-106e-4530-ad9c-b15b7bfcffd9" />
+    </mapping>
+  </component>
+</project>

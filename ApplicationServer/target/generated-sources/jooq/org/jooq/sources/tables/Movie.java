@@ -6,9 +6,10 @@ package org.jooq.sources.tables;
 
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.Name;
 import org.jooq.Record;
-import org.jooq.Row5;
+import org.jooq.Row6;
 import org.jooq.Schema;
 import org.jooq.Table;
 import org.jooq.TableField;
@@ -46,17 +47,12 @@ public class Movie extends TableImpl<MovieRecord> {
     /**
      * The column <code>public.movie.movie_id</code>.
      */
-    public final TableField<MovieRecord, Integer> MOVIE_ID = createField(DSL.name("movie_id"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<MovieRecord, Integer> MOVIE_ID = createField(DSL.name("movie_id"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>public.movie.tile</code>.
+     * The column <code>public.movie.title</code>.
      */
-    public final TableField<MovieRecord, String> TILE = createField(DSL.name("tile"), SQLDataType.CLOB, this, "");
-
-    /**
-     * The column <code>public.movie.duration</code>.
-     */
-    public final TableField<MovieRecord, Integer> DURATION = createField(DSL.name("duration"), SQLDataType.INTEGER, this, "");
+    public final TableField<MovieRecord, String> TITLE = createField(DSL.name("title"), SQLDataType.VARCHAR(100).nullable(false), this, "");
 
     /**
      * The column <code>public.movie.release_year</code>.
@@ -64,9 +60,19 @@ public class Movie extends TableImpl<MovieRecord> {
     public final TableField<MovieRecord, Integer> RELEASE_YEAR = createField(DSL.name("release_year"), SQLDataType.INTEGER, this, "");
 
     /**
+     * The column <code>public.movie.genre</code>.
+     */
+    public final TableField<MovieRecord, String[]> GENRE = createField(DSL.name("genre"), SQLDataType.VARCHAR(100).getArrayDataType(), this, "");
+
+    /**
+     * The column <code>public.movie.duration</code>.
+     */
+    public final TableField<MovieRecord, Integer> DURATION = createField(DSL.name("duration"), SQLDataType.INTEGER, this, "");
+
+    /**
      * The column <code>public.movie.link</code>.
      */
-    public final TableField<MovieRecord, String> LINK = createField(DSL.name("link"), SQLDataType.VARCHAR, this, "");
+    public final TableField<MovieRecord, String> LINK = createField(DSL.name("link"), SQLDataType.VARCHAR(100).nullable(false), this, "");
 
     private Movie(Name alias, Table<MovieRecord> aliased) {
         this(alias, aliased, null);
@@ -107,6 +113,11 @@ public class Movie extends TableImpl<MovieRecord> {
     }
 
     @Override
+    public Identity<MovieRecord, Integer> getIdentity() {
+        return (Identity<MovieRecord, Integer>) super.getIdentity();
+    }
+
+    @Override
     public UniqueKey<MovieRecord> getPrimaryKey() {
         return Keys.MOVIE_PKEY;
     }
@@ -138,11 +149,11 @@ public class Movie extends TableImpl<MovieRecord> {
     }
 
     // -------------------------------------------------------------------------
-    // Row5 type methods
+    // Row6 type methods
     // -------------------------------------------------------------------------
 
     @Override
-    public Row5<Integer, String, Integer, Integer, String> fieldsRow() {
-        return (Row5) super.fieldsRow();
+    public Row6<Integer, String, Integer, String[], Integer, String> fieldsRow() {
+        return (Row6) super.fieldsRow();
     }
 }

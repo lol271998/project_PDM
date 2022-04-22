@@ -3,8 +3,8 @@ org/jooq/sources/Public.class
 org/jooq/sources/tables/Users.class
 org/jooq/sources/tables/records/MovieRecord.class
 org/jooq/sources/Tables.class
-org/app/StudentResource.class
 org/app/RestApplication.class
+org/app/StudentResource.class
 org/jooq/sources/DefaultCatalog.class
 org/jooq/sources/Keys.class
 org/jooq/sources/tables/records/UsersRecord.class
